@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Դավիթ և Մարիամ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Noto+Serif+Armenian:wght@400;500;600;700&family=Noto+Sans+Armenian:wght@400;500;600;700&family=Nunito:wght@800;900&display=swap">
+<style>
+/* Layout: a gate-fold opener, then one centered column like a printed invitation card. Single ivory + lavender look by choice. */
+:root{
+  --bg:#F7F3EE; --paper:#FFFDF9; --ink:#1E1A24; --muted:#615A6C; --line:#E4DAF3;
+  --lav:#CDB8F2; --lav-soft:#EFE8FA; --violet:#4A2D8F; --violet-2:#8B6BD9; --gold:#B9975B;
+  --serif:'Noto Serif Armenian',Georgia,serif;
+  --sans:'Noto Sans Armenian',system-ui,sans-serif;
+  --amp:'Cormorant Garamond',Georgia,serif;
+  --brand:'Nunito','Noto Sans Armenian',system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;overflow-x:hidden;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--violet-2);outline-offset:3px}
+h1,h2,h3{margin:0;text-wrap:balance;font-weight:600}
+
+.wrap{max-width:540px;margin:0 auto;display:flex;flex-direction:column;gap:84px;padding-block:64px 48px}
+.sec{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px}
+.eyebrow{font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--violet-2)}
+.h2{font-family:var(--serif);font-size:clamp(28px,7.5vw,36px);line-height:1.2}
+.ornament{width:120px;height:18px;display:block}
+
+/* ---------- Gate ---------- */
+#gate{position:fixed;inset:0;z-index:50;pointer-events:none;perspective:1800px;background:rgba(30,26,36,0);transition:background .6s}
+.door{position:absolute;top:0;bottom:0;width:50%;pointer-events:auto;overflow:hidden;backface-visibility:hidden;
+  background:linear-gradient(180deg,#FFFDF9 0%,#F8F2EA 100%);
+  transition:transform 1.5s cubic-bezier(.65,0,.25,1), filter 1.5s}
+.door.l{left:0;transform-origin:left center;box-shadow:inset -18px 0 24px -18px rgba(74,45,143,.28)}
+.door.r{right:0;transform-origin:right center;box-shadow:inset 18px 0 24px -18px rgba(74,45,143,.28)}
+/* double hairline frame that runs around the whole folded card */
+.door::before,.door::after{content:"";position:absolute;top:18px;bottom:18px;border:1px solid var(--lav)}
+.door::after{top:25px;bottom:25px;border-color:#E4DAF3}
+.door.l::before{left:18px;right:-2px;border-right:0}.door.l::after{left:25px;right:-2px;border-right:0}
+.door.r::before{right:18px;left:-2px;border-left:0}.door.r::after{right:25px;left:-2px;border-left:0}
+.sprig{position:absolute;width:96px;height:96px}
+.door.l .sprig.top{left:32px;top:32px}
+.door.l .sprig.bot{left:32px;bottom:32px;transform:scaleY(-1)}
+.door.r .sprig.top{right:32px;top:32px;transform:scaleX(-1)}
+.door.r .sprig.bot{right:32px;bottom:32px;transform:scale(-1,-1)}
+.ribbon{position:absolute;left:0;right:0;top:50%;height:30px;margin-top:-15px;
+  background:linear-gradient(180deg,#B9A3E8 0%,#CDB8F2 45%,#B9A3E8 100%);box-shadow:0 2px 6px rgba(74,45,143,.18)}
+.gate-text{position:absolute;left:0;right:0;top:calc(15% + env(safe-area-inset-top,0px));text-align:center;pointer-events:none;z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:10px;padding:0 40px;transition:opacity .35s}
+.gate-text .t0{font-size:12px;font-weight:600;letter-spacing:.24em;color:var(--violet-2)}
+.gate-text .t1{font-family:var(--serif);font-weight:600;font-size:clamp(30px,8.5vw,42px);line-height:1.15;color:var(--ink)}
+.gate-text .t2{font-family:var(--serif);font-size:18px;color:var(--muted)}
+.gate-text .t2 i{font-family:var(--amp);font-size:1.25em;color:var(--violet-2);padding:0 4px}
+#seal{position:absolute;left:50%;top:50%;width:96px;height:96px;margin:-48px 0 0 -48px;border:0;pointer-events:auto;z-index:3;padding:0;
+  border-radius:47% 53% 50% 50% / 52% 48% 52% 48%;
+  background:radial-gradient(circle at 36% 30%,#8A68D8 0%,#5A3AA6 45%,#3C2378 100%);
+  box-shadow:0 10px 22px -6px rgba(54,32,107,.65), inset 0 2px 3px rgba(255,255,255,.25), inset 0 -3px 6px rgba(0,0,0,.25);
+  display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.3,1.4,.5,1), opacity .5s;animation:pulse 2.4s ease-in-out infinite}
+#seal::before{content:"";position:absolute;inset:12px;border-radius:50%;border:1.5px solid rgba(243,236,255,.45);box-shadow:inset 0 1px 2px rgba(0,0,0,.25)}
+#seal span{position:relative;font-family:var(--serif);font-weight:600;font-size:24px;color:#F3ECFF;line-height:1;text-shadow:0 1px 1px rgba(0,0,0,.3)}
+#seal span i{font-family:var(--amp);font-weight:500;font-size:1.2em;padding:0 1px}
+.tap{position:absolute;left:0;right:0;top:calc(50% + 70px);text-align:center;font-size:14px;font-weight:600;color:var(--muted);z-index:2;transition:opacity .3s;
+  display:flex;align-items:center;justify-content:center;gap:8px}
+.tap::before,.tap::after{content:"";width:22px;height:1px;background:var(--lav)}
+#gate.open .door.l{transform:rotateY(-110deg);filter:brightness(.85)}
+#gate.open .door.r{transform:rotateY(110deg);filter:brightness(.85)}
+#gate.open #seal{transform:scale(1.35);opacity:0;animation:none}
+#gate.open .gate-text,#gate.open .tap{opacity:0}
+#gate.done{display:none}
+
+/* ---------- Hero card ---------- */
+.card{position:relative;width:100%;background:var(--paper);border-radius:220px 220px 22px 22px;padding:84px 26px 44px;
+  box-shadow:0 40px 70px -46px rgba(46,26,94,.55);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
+.card::before{content:"";position:absolute;inset:10px;border:1px solid var(--lav);border-radius:212px 212px 15px 15px;pointer-events:none}
+.names{font-family:var(--serif);font-weight:600;font-size:clamp(42px,12vw,60px);line-height:1.05;display:flex;flex-direction:column;align-items:center}
+.names .amp{font-family:var(--amp);font-style:italic;font-weight:500;font-size:1.15em;color:var(--violet-2);line-height:.9;margin:4px 0}
+.lede{font-family:var(--serif);font-size:18px;line-height:1.7;color:var(--muted);max-width:30ch;margin:0}
+.date{display:flex;align-items:center;gap:14px;font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:.06em}
+.date .bar{width:1px;height:46px;background:var(--lav)}
+.date .day{font-size:52px;line-height:1;color:var(--violet)}
+.date small{display:block;font-family:var(--sans);font-weight:500;font-size:13px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+
+/* ---------- Countdown ---------- */
+.count{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%}
+.tile{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px 4px 12px}
+.tile b{display:block;font-family:var(--serif);font-weight:600;font-size:clamp(28px,8vw,38px);line-height:1.1;font-variant-numeric:tabular-nums;color:var(--violet)}
+.tile span{font-size:13px;color:var(--muted);font-weight:500}
+
+/* ---------- Schedule ---------- */
+.timeline{width:100%;display:flex;flex-direction:column;gap:0;text-align:left;position:relative}
+.timeline::before{content:"";position:absolute;left:62px;top:14px;bottom:14px;border-left:1.5px dashed var(--lav)}
+.ev{display:grid;grid-template-columns:52px 22px minmax(0,1fr);column-gap:10px;align-items:start;padding:14px 0}
+.ev time{font-family:var(--serif);font-weight:600;font-size:18px;color:var(--violet);padding-top:2px;font-variant-numeric:tabular-nums}
+.ev .dot{width:14px;height:14px;margin:7px 0 0 3px;border-radius:50%;background:var(--paper);border:2px solid var(--violet-2);position:relative;z-index:1}
+.ev h3{font-family:var(--serif);font-size:20px;line-height:1.3}
+.ev p{margin:4px 0 8px;color:var(--muted);font-size:15px}
+.map{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--violet);text-decoration:none;border:1px solid var(--lav);border-radius:999px;padding:6px 14px;min-height:36px}
+.map:hover{background:var(--lav-soft)}
+
+/* ---------- Dress code ---------- */
+.swatches{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.sw{width:54px;height:54px;border-radius:50%;box-shadow:0 10px 20px -12px rgba(46,26,94,.5), inset 0 0 0 1px rgba(0,0,0,.05)}
+.note{font-size:15px;color:var(--muted);max-width:34ch;margin:0}
+
+/* ---------- RSVP ---------- */
+.rsvp{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px 22px;text-align:left;display:flex;flex-direction:column;gap:16px;box-shadow:0 30px 60px -46px rgba(46,26,94,.6)}
+label{font-size:14px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px}
+.field input{width:100%;height:52px;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);padding:0 16px;font-size:17px}
+.field input:focus{outline:none;border-color:var(--violet-2);background:#fff}
+.choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice label{margin:0;height:52px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--line);border-radius:14px;background:var(--bg);color:var(--ink);font-size:16px;cursor:pointer}
+.choice input:checked+label{background:var(--violet);border-color:var(--violet);color:#fff}
+.choice input:focus-visible+label{outline:3px solid var(--violet-2);outline-offset:2px}
+.stepper{display:flex;align-items:center;gap:14px}
+.stepper button{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);background:var(--bg);font-size:22px;line-height:1}
+.stepper output{font-family:var(--serif);font-weight:600;font-size:24px;min-width:2ch;text-align:center;font-variant-numeric:tabular-nums}
+.send{height:56px;border:0;border-radius:999px;background:var(--ink);color:#fff;font-weight:600;font-size:17px;margin-top:4px}
+.err{color:#9B2C4A;font-size:14px;margin:-6px 0 0;min-height:1em}
+.thanks{text-align:center;align-items:center}
+.thanks .big{font-family:var(--serif);font-weight:600;font-size:28px;line-height:1.25}
+
+/* ---------- Footer / sound ---------- */
+footer{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--muted);font-size:14px}
+.sign{font-family:var(--serif);font-size:18px;color:var(--ink)}
+.logo{position:relative;width:150px;height:52px;display:flex;align-items:center;justify-content:center}
+.logo svg{position:absolute;inset:0}
+.logo b{position:relative;font-family:var(--brand);font-weight:900;font-size:27px;color:var(--ink);letter-spacing:.5px}
+#snd{position:fixed;z-index:40;top:calc(14px + env(safe-area-inset-top, 0px));right:calc(14px + env(safe-area-inset-right, 0px));
+  width:48px;height:48px;border-radius:50%;border:1.5px solid var(--lav);background:rgba(255,253,249,.88);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center}
+#snd .bars{display:flex;gap:3px;align-items:flex-end;height:18px}
+#snd .bars i{width:3px;height:6px;background:var(--violet);border-radius:2px}
+#snd.on .bars i{animation:eq .9s ease-in-out infinite}
+#snd.on .bars i:nth-child(2){animation-delay:-.3s}#snd.on .bars i:nth-child(3){animation-delay:-.6s}#snd.on .bars i:nth-child(4){animation-delay:-.15s}
+#petals{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:45}
+
+@keyframes pulse{0%,100%{box-shadow:0 12px 30px -8px rgba(54,32,107,.7),0 0 0 0 rgba(139,107,217,.45), inset 0 0 0 6px rgba(255,255,255,.12)}50%{box-shadow:0 12px 30px -8px rgba(54,32,107,.7),0 0 0 18px rgba(139,107,217,0), inset 0 0 0 6px rgba(255,255,255,.12)}}
+@keyframes eq{0%,100%{height:5px}50%{height:18px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+<style>html,body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div id="gate">
+  <div class="door l">
+    <svg class="sprig top" viewBox="0 0 96 96" aria-hidden="true"><use href="#sprig"/></svg>
+    <svg class="sprig bot" viewBox="0 0 96 96" aria-hidden="true"><use href="#sprig"/></svg>
+    <span class="ribbon"></span>
+  </div>
+  <div class="door r">
+    <svg class="sprig top" viewBox="0 0 96 96" aria-hidden="true"><use href="#sprig"/></svg>
+    <svg class="sprig bot" viewBox="0 0 96 96" aria-hidden="true"><use href="#sprig"/></svg>
+    <span class="ribbon"></span>
+  </div>
+  <div class="gate-text">
+    <div class="t0">ՀԱՐՍԱՆՅԱՑ ՀՐԱՎԻՐԱՏՈՄՍ</div>
+    <div class="t1">Դուք հրավիրված եք</div>
+    <div class="t2">Դավիթ<i>&amp;</i>Մարիամ</div>
+  </div>
+  <button id="seal" type="button" aria-label="Բացել հրավիրատոմսը"><span>Դ<i>&amp;</i>Մ</span></button>
+  <div class="tap">Հպեք կնիքին</div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="sprig" viewBox="0 0 96 96">
+      <path d="M6 90C26 70 44 46 60 8" fill="none" stroke="#B9A3E8" stroke-width="1.6" stroke-linecap="round"/>
+      <g fill="#CDB8F2">
+        <ellipse cx="20" cy="70" rx="9" ry="4" transform="rotate(-20 20 70)"/>
+        <ellipse cx="32" cy="60" rx="9" ry="4" transform="rotate(60 32 60)"/>
+        <ellipse cx="38" cy="46" rx="9" ry="4" transform="rotate(-30 38 46)"/>
+        <ellipse cx="48" cy="36" rx="9" ry="4" transform="rotate(55 48 36)"/>
+        <ellipse cx="52" cy="22" rx="8" ry="3.6" transform="rotate(-40 52 22)"/>
+      </g>
+      <circle cx="60" cy="8" r="3" fill="#8B6BD9"/>
+      <circle cx="14" cy="80" r="2.2" fill="#8B6BD9"/>
+    </symbol>
+  </svg>
+</div>
+
+<button id="snd" type="button" aria-label="Միացնել կամ անջատել երաժշտությունը" aria-pressed="false"><span class="bars"><i></i><i></i><i></i><i></i></span></button>
+<canvas id="petals" aria-hidden="true"></canvas>
+
+<main class="wrap">
+
+  <section class="card" aria-label="Հրավիրատոմս">
+    <div class="eyebrow">Հրավիրատոմս</div>
+    <h1 class="names"><span>Դավիթ</span><span class="amp">&amp;</span><span>Մարիամ</span></h1>
+    <svg class="ornament" viewBox="0 0 120 18" aria-hidden="true"><path d="M2 9h44M74 9h44" stroke="#CDB8F2" stroke-width="1.5"/><path d="M60 1C61 7 63 8 69 9C63 10 61 11 60 17C59 11 57 10 51 9C57 8 59 7 60 1Z" fill="#8B6BD9"/></svg>
+    <p class="lede">Սիրով հրավիրում ենք Ձեզ կիսելու մեր կյանքի ամենակարևոր օրը</p>
+    <div class="date">
+      <div>ՀՈՒՆԻՍ<small>2027</small></div>
+      <span class="bar"></span>
+      <div class="day">12</div>
+      <span class="bar"></span>
+      <div>ՇԱԲԱԹ<small>Երևան</small></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="eyebrow">Հետհաշվարկ</div>
+    <h2 class="h2">Մինչև մեր օրը մնացել է</h2>
+    <div class="count" role="timer" aria-live="off">
+      <div class="tile"><b id="cd-d">0</b><span>օր</span></div>
+      <div class="tile"><b id="cd-h">00</b><span>ժամ</span></div>
+      <div class="tile"><b id="cd-m">00</b><span>րոպե</span></div>
+      <div class="tile"><b id="cd-s">00</b><span>վայրկյան</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="eyebrow">Ծրագիր</div>
+    <h2 class="h2">Օրվա ընթացքը</h2>
+    <div class="timeline">
+      <div class="ev"><time>13:00</time><span class="dot"></span><div><h3>Պսակադրություն</h3><p>Սուրբ Աննա եկեղեցի, Երևան</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Saint+Anna+Church+Yerevan" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Քարտեզ</a></div></div>
+      <div class="ev"><time>17:30</time><span class="dot"></span><div><h3>Հյուրերի դիմավորում</h3><p>Լավանդա ռեստորան, Երևան</p><a class="map" href="https://www.google.com/maps/search/?api=1&amp;query=Yerevan" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Քարտեզ</a></div></div>
+      <div class="ev"><time>18:00</time><span class="dot"></span><div><h3>Հարսանյաց հանդիսություն</h3><p>Ընթրիք, պար և շատ ուրախություն</p></div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="eyebrow">Հագուստի ոճ</div>
+    <h2 class="h2">Պաստելային երանգներ</h2>
+    <div class="swatches" aria-hidden="true">
+      <span class="sw" style="background:#E9DFFB"></span><span class="sw" style="background:#CDB8F2"></span><span class="sw" style="background:#F6D7E2"></span><span class="sw" style="background:#F3EBDD"></span><span class="sw" style="background:#FFFFFF"></span>
+    </div>
+    <p class="note">Կլինենք ուրախ, եթե ընտրեք այս նուրբ գույներից մեկը</p>
+  </section>
+
+  <section class="sec">
+    <div class="eyebrow">Պատասխան</div>
+    <h2 class="h2">Կմիանա՞ք մեզ</h2>
+    <p class="note">Խնդրում ենք հաստատել Ձեր ներկայությունը մինչև մայիսի 1-ը</p>
+    <form class="rsvp" id="rsvp" novalidate>
+      <div class="field"><label for="nm">Անուն, ազգանուն</label><input id="nm" name="nm" autocomplete="name" placeholder="Օրինակ՝ Անի Սարգսյան"></div>
+      <div>
+        <label id="att-l">Կներկայանա՞ք</label>
+        <div class="choice" role="radiogroup" aria-labelledby="att-l">
+          <input type="radio" name="att" id="att-y" value="y" checked><label for="att-y">Այո, սիրով</label>
+          <input type="radio" name="att" id="att-n" value="n"><label for="att-n">Ցավոք, ոչ</label>
+        </div>
+      </div>
+      <div id="guestsRow">
+        <label id="g-l">Հյուրերի քանակը</label>
+        <div class="stepper" aria-labelledby="g-l">
+          <button type="button" id="minus" aria-label="Պակասեցնել">−</button>
+          <output id="guests">1</output>
+          <button type="button" id="plus" aria-label="Ավելացնել">+</button>
+        </div>
+      </div>
+      <p class="err" id="err" aria-live="polite"></p>
+      <button class="send" type="submit">Ուղարկել պատասխանը</button>
+    </form>
+    <div class="rsvp thanks" id="thanks" hidden>
+      <svg width="48" height="48" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 6-8 11-8 11z" fill="#4A2D8F"/></svg>
+      <div class="big" id="thanksTitle">Շնորհակալություն</div>
+      <p class="note" id="thanksText" style="margin:0 auto">Սպասում ենք Ձեզ հունիսի 12-ին</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="sign">Սիրով՝ Դավիթ և Մարիամ</div>
+    <div class="logo"><svg viewBox="0 0 230 80" aria-hidden="true"><ellipse cx="112" cy="44" rx="106" ry="22" fill="none" stroke="#8B6BD9" stroke-width="4" stroke-linecap="round" stroke-dasharray="300 176" transform="rotate(-9 112 44)"/><path d="M200 2C201 12 204 15 214 16C204 17 201 20 200 30C199 20 196 17 186 16C196 15 199 12 200 2Z" fill="#8B6BD9"/></svg><b>MUSEO</b></div>
+    Ստեղծված է MUSEO-ի կողմից
+  </footer>
+</main>
+
+<script>
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Countdown to 12 June 2027, 13:00 Yerevan (UTC+4) ---------- */
+  const target=Date.UTC(2027,5,12,9,0,0);
+  const el={d:document.getElementById('cd-d'),h:document.getElementById('cd-h'),m:document.getElementById('cd-m'),s:document.getElementById('cd-s')};
+  const p2=n=>String(n).padStart(2,'0');
+  function tick(){
+    let t=Math.max(0,Math.floor((target-Date.now())/1000));
+    el.d.textContent=Math.floor(t/86400); t%=86400;
+    el.h.textContent=p2(Math.floor(t/3600)); t%=3600;
+    el.m.textContent=p2(Math.floor(t/60)); el.s.textContent=p2(t%60);
+  }
+  tick(); setInterval(tick,1000);
+
+  /* ---------- Original music-box arpeggio (Web Audio) ---------- */
+  let ctx=null,master=null,playing=false,timer=null;
+  const f=n=>440*Math.pow(2,(n-69)/12);
+  const prog=[[60,64,67,71],[57,60,64,67],[53,57,60,64],[55,59,62,67]];
+  const mel=[76,74,72,71, 72,69,67,69, 65,67,69,72, 71,74,79,76];
+  function note(freq,t,v,len){
+    const o=ctx.createOscillator(),o2=ctx.createOscillator(),g=ctx.createGain();
+    o.type='sine';o.frequency.value=freq;o2.type='triangle';o2.frequency.value=freq*2;
+    const g2=ctx.createGain();g2.gain.value=.18;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+len);
+    o.connect(g);o2.connect(g2).connect(g);g.connect(master);o.start(t);o2.start(t);o.stop(t+len+.1);o2.stop(t+len+.1);
+  }
+  function loop(){
+    if(!playing)return;
+    const st=.32,t0=ctx.currentTime+.08;
+    prog.forEach((ch,ci)=>{
+      for(let k=0;k<8;k++){const n=ch[[0,1,2,3,2,1,2,3][k]]; note(f(n-12),t0+(ci*8+k)*st,.07,1.4);}
+      for(let k=0;k<4;k++){note(f(mel[ci*4+k]),t0+(ci*8+k*2)*st,.11,1.8);}
+    });
+    timer=setTimeout(loop,(32*st)*1000);
+  }
+  const snd=document.getElementById('snd');
+  function setMusic(on){
+    try{
+      if(on){
+        if(!ctx){ctx=new(window.AudioContext||window.webkitAudioContext)();master=ctx.createGain();master.gain.value=.9;master.connect(ctx.destination);}
+        ctx.resume(); if(!playing){playing=true;loop();}
+      }else{playing=false;clearTimeout(timer);if(ctx)ctx.suspend();}
+    }catch(e){on=false;}
+    snd.classList.toggle('on',on);snd.setAttribute('aria-pressed',String(on));
+  }
+  snd.addEventListener('click',()=>setMusic(!playing));
+
+  /* ---------- Petals ---------- */
+  const cv=document.getElementById('petals'),cx=cv.getContext('2d');let petals=[],raf=null;
+  const pc=['#CDB8F2','#E9DFFB','#F6D7E2','#B9A3E8','#FFFFFF'];
+  function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;}
+  size();addEventListener('resize',size);
+  function shower(n){
+    if(reduce)return;
+    for(let i=0;i<n;i++)petals.push({x:Math.random()*innerWidth,y:-20-Math.random()*innerHeight*.8,s:6+Math.random()*9,vy:.7+Math.random()*1.3,
+      sway:Math.random()*6.28,sw:.01+Math.random()*.02,r:Math.random()*6.28,vr:(Math.random()-.5)*.04,c:pc[i%pc.length]});
+    if(!raf)draw();
+  }
+  function draw(){
+    const d=devicePixelRatio;cx.clearRect(0,0,cv.width,cv.height);
+    petals=petals.filter(p=>p.y<innerHeight+30);
+    petals.forEach(p=>{
+      p.sway+=p.sw;p.y+=p.vy;p.x+=Math.sin(p.sway)*.8;p.r+=p.vr;
+      cx.save();cx.translate(p.x*d,p.y*d);cx.rotate(p.r);cx.fillStyle=p.c;cx.globalAlpha=.9;
+      cx.beginPath();cx.ellipse(0,0,p.s*d*.55,p.s*d,0,0,6.29);cx.fill();cx.restore();
+    });
+    raf=petals.length?requestAnimationFrame(draw):null;
+  }
+
+  /* ---------- Gate ---------- */
+  const gate=document.getElementById('gate');
+  document.getElementById('seal').addEventListener('click',()=>{
+    gate.classList.add('open');setMusic(true);shower(70);
+    setTimeout(()=>gate.classList.add('done'),1550);
+  });
+
+  /* ---------- RSVP (demo: stays on this page) ---------- */
+  let guests=1;const out=document.getElementById('guests');
+  document.getElementById('minus').onclick=()=>{guests=Math.max(1,guests-1);out.textContent=guests;};
+  document.getElementById('plus').onclick=()=>{guests=Math.min(10,guests+1);out.textContent=guests;};
+  const row=document.getElementById('guestsRow');
+  document.querySelectorAll('input[name="att"]').forEach(r=>r.addEventListener('change',()=>{row.hidden=document.getElementById('att-n').checked;}));
+  document.getElementById('rsvp').addEventListener('submit',e=>{
+    e.preventDefault();
+    const name=document.getElementById('nm').value.trim(), err=document.getElementById('err');
+    if(!name){err.textContent='Խնդրում ենք գրել Ձեր անունը';document.getElementById('nm').focus();return;}
+    err.textContent='';
+    const yes=document.getElementById('att-y').checked, first=name.split(/\s+/)[0];
+    document.getElementById('thanksTitle').textContent='Շնորհակալություն, '+first+'։';
+    document.getElementById('thanksText').textContent=yes?'Սպասում ենք Ձեզ հունիսի 12-ին':'Կկարոտենք Ձեզ այդ օրը';
+    e.target.hidden=true;document.getElementById('thanks').hidden=false;
+    if(yes)shower(40);
+  });
+})();
+</script>
+
+</body>
+</html>
